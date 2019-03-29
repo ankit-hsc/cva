@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+
+	<appender name="CVA_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+		<File></File>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_PATH}/cva.%d{yyyy-MM-dd}_${HOSTNAME}_%i.log
+			</fileNamePattern>
+
+			<!-- keep 10 days' worth of history -->
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{"yyyy-MM-dd'T'HH:mm:ss.SSS"}: [%-5level] [%thread] [%logger{15}.%M] - %X{packageAssetId} %msg%n</pattern>
+		</encoder>
+
+	</appender>
+
+	<appender name="APPLICATION_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+		<File></File>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_PATH}/application.%d{yyyy-MM-dd}_${HOSTNAME}_%i.log
+			</fileNamePattern>
+
+			<!-- keep 10 days' worth of history -->
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{"yyyy-MM-dd'T'HH:mm:ss.SSS"}: [%-5level] [%thread] [%logger{15}.%M] - %msg%n</pattern>
+		</encoder>
+
+	</appender>
+
+	<logger name="com.arris.cva" level="INFO" additivity="false">
+		<appender-ref ref="CVA_APPENDER" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="APPLICATION_APPENDER" />
+	</root>
+
+</configuration>
